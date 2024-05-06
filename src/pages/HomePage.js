@@ -18,6 +18,7 @@ const HomePage = () => {
   const [selectedDate, setSelectedDate] = useState([]);
   const [type, setType] = useState('all');
   const [viewData, setViewData] = useState('table');
+  const [editable, setEditable] = useState(null);
 
   const handleModal = () => {
     setShowModal(true);
@@ -39,9 +40,7 @@ const HomePage = () => {
   }
 
   // Edit Transactions
-  const editTransactions = (record) => {
-    console.log(record);
-  }
+
 
   // Table Data
   const columns = [
@@ -69,10 +68,10 @@ const HomePage = () => {
       width: 1,
       render: (text, record) => (
         <div className='flex justify-center'>
-          <button className='btn bg-[#3CB29C] text-white mx-2' onClick={editTransactions(text)}><EditFilled/></button>
-          <button className='btn btn-danger'><DeleteFilled/></button>
+          <button className='btn bg-[#3CB29C] text-white mx-2'><EditFilled /></button>
+          <button className='btn btn-danger'><DeleteFilled /></button>
         </div>
-      ) 
+      )
     }
   ]
 
@@ -128,7 +127,7 @@ const HomePage = () => {
             <AreaChartOutlined className={`mx-2 ${viewData === 'analytics' ? 'active-icon' : 'inactive-icon'}`} onClick={() => setViewData('analytics')} />
           </div>
           <div>
-            <button className='btn bg-[#3CB29C] text-white flex align-center px-2'onClick={handleModal}>ADD NEW <PlusOutlined/></button>
+            <button className='btn bg-[#3CB29C] text-white flex align-center px-2' onClick={handleModal}>ADD NEW <PlusOutlined /></button>
           </div>
         </div>
 
@@ -143,8 +142,8 @@ const HomePage = () => {
           onOk={() => setShowModal(false)}
           onCancel={() => setShowModal(false)}
           footer={false}>
-          <h3>Add Transaction</h3>
-          <Form layout='vertical' onFinish={handleSubmit} style={{ margin: "2rem 0 0 0" }}>
+          <h3 className='font-bold text-2xl'>Add Transaction</h3>
+          <Form layout='vertical' onFinish={handleSubmit} style={{ margin: "2rem 0 0 0" }} initialValues={editable}>
             <Form.Item label='Amount' name='amount'>
               <Input type='text' style={{ width: "100%" }} />
             </Form.Item>
@@ -183,8 +182,6 @@ const HomePage = () => {
             </div>
           </Form>
         </Modal>
-
-
       </Layout>
     </>
   )
